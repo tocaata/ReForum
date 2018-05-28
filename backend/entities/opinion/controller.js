@@ -67,9 +67,61 @@ const deleteOpinion = (opinion_id) => {
   });
 };
 
+const thumbsUpOpinion = (opinion_id, user_id) => {
+  return new Promise((resolve, reject) => {
+    Opinion.findById(opinion_id, (error, opinion) => {
+      if (error) { console.log(error); reject(error); }
+      else if (!opinion) { reject(null); }
+      else {
+        let matched = opinion.thumbsups.indexOf(user_id), matchedDown = opinion.thumbsdowns.indexOf(user_id);
+        if (matched < 0) {
+          opinion.thumbsups = opinion.thumbsups.concat(user_id);
+        } else {
+          opinion.thumbsups.splice(matched, 1);
+        }
+
+        if (matchedDown >= 0) {
+          opinion.thumbsdowns.splice(matched, 1);
+        }
+        opinion.save((error, updatedOpinion) => {
+          if (error) { console.log(error); reject(error); }
+          resolve(updatedOpinion);
+        });
+      }
+    });
+  });
+}
+
+const thumbsDownOpinion = (opinion_id, user_id) => {
+  return new Promise((resolve, reject) => {
+    Opinion.findById(opinion_id, (error, opinion) => {
+      if (error) { console.log(error); reject(error); }
+      else if (!opinion) { reject(null); }
+      else {
+        let matched = opinion.thumbsdowns.indexOf(user_id), matchedUp = opinion.thumbsups.indexOf(user_id);
+        if (matched < 0) {
+          opinion.thumbsdowns = opinion.thumbsdowns.concat(user_id);
+        } else {
+          opinion.thumbsdowns.splice(matched, 1);
+        }
+
+        if (matchedUp >= 0) {
+          opinion.thumbsups.splice(matched, 1);
+        }
+        opinion.save((error, updatedOpinion) => {
+          if (error) { console.log(error); reject(error); }
+          resolve(updatedOpinion);
+        });
+      }
+    });
+  });
+}
+
 module.exports = {
   getAllOpinions,
   createOpinion,
   updateOpinion,
   deleteOpinion,
+  thumbsUpOpinion,
+  thumbsDownOpinion,
 };

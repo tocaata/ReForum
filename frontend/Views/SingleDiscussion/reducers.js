@@ -22,6 +22,10 @@ import {
   DELETE_OPINION_START,
   DELETE_OPINION_SUCCESS,
   DELETE_OPINION_FAILURE,
+
+  TOGGLE_THUMBSUP_START,
+  TOGGLE_THUMBSUP_FAILURE,
+  TOGGLE_THUMBSUP_SUCCESS,
 } from './constants';
 
 const initialState = {
@@ -35,6 +39,8 @@ const initialState = {
   deletingOpinion: null,
   discussion: null,
   error: null,
+  toggle_thumbsup: false,
+  toggle_thumbsdown: false,
 };
 
 export const singleDiscussionReducer = (state = initialState, action) => {
@@ -130,6 +136,17 @@ export const singleDiscussionReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         deletingOpinion: null,
       });
+
+    case TOGGLE_THUMBSUP_START:
+      return Object.assign({}, state, {
+        toggle_thumbsup: true,
+      });
+
+    case TOGGLE_THUMBSUP_FAILURE:
+      return Object.assign({}, state, {
+        toggle_thumbsup: false,
+      });
+    case TOGGLE_THUMBSUP_SUCCESS:
 
     default:
       return state;

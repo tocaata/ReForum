@@ -45,6 +45,7 @@ class UserMenu extends Component {
           </a> }
 
           { signedIn && <span onClick={this.toggleSubMenu}><Link className={styles.subMenuItem} to={`/user/${gitHandler}`}>My Profile</Link></span> }
+          { signedIn && <span onClick={this.toggleSubMenu}><Link className={styles.subMenuItem} to={`/user/${gitHandler}/messages`}>Messages</Link></span> }
           {/* { signedIn && <a className={styles.subMenuItem} href={'#'}>Settings</a> } */}
           { signedIn && <a className={styles.subMenuItem} href={'/api/user/signout'}>Sign Out</a> }
         </div>
@@ -67,6 +68,7 @@ class UserMenu extends Component {
         <div style={{ position: 'relative' }}>
           <div className={styles.container} onClick={this.toggleSubMenu}>
             <img className={styles.userAvatar} src={avatar} alt={`${userName} Avatar`} />
+            <span className={styles.notificationsCount}>11</span>
             <span className={styles.title}>{userName}</span>
           </div>
           {this.renderSubMenu()}

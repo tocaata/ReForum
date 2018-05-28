@@ -12,6 +12,8 @@ const opinionSchema = mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'user' },
   date: Date,
   content: Object,
+  thumbsups: Array,
+  thumbsdowns: Array,
 });
 
 module.exports = mongoose.model('opinion', opinionSchema);

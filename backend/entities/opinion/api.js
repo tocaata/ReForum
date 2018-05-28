@@ -2,6 +2,8 @@
 const getAllOpinions = require('./controller').getAllOpinions;
 const createOpinion = require('./controller').createOpinion;
 const deleteOpinion = require('./controller').deleteOpinion;
+const thumbsUpOpinion = require('./controller').thumbsUpOpinion;
+const thumbsDownOpinion = require('./controller').thumbsDownOpinion;
 
 /**
  * opinion apis
@@ -25,6 +27,28 @@ const opinionAPI = (app) => {
       deleteOpinion(req.params.opinion_id).then(
         (result) => { res.send({ deleted: true }); },
         (error) => { res.send({ deleted: false }); }
+      );
+    }
+  });
+
+
+  // thumbs up an opinion
+  app.put('/api/opinion/thumbsUpOpinion/:opinion_id', (req, res) => {
+    if (req.user) {
+      console.log("thumbsUpOpinion is catched.");
+      thumbsUpOpinion(req.params.opinion_id, req.user._id).then(
+        (result) => { res.send({ thumbsUp: true }); },
+        (error) => { res.send({ thumbsUp: false }); }
+      );
+    }
+  });
+
+  app.put('/api/opinion/thumbsDownOpinion/:opinion_id', (req, res) => {
+    if (req.user) {
+      console.log("thumbsDownOpinion is catched.");
+      thumbsDownOpinion(req.params.opinion_id, req.user._id).then(
+        (result) => { res.send({ thumbsDown: true }); },
+        (error) => { res.send({ thumbsDown: false }); }
       );
     }
   });

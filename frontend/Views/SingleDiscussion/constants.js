@@ -21,3 +21,11 @@ export const DELETE_DISC_REDIRECT = 'delete_disc_redirect';
 export const DELETE_OPINION_START = 'delete_opinion_start';
 export const DELETE_OPINION_SUCCESS = 'delete_opinion_success';
 export const DELETE_OPINION_FAILURE = 'delete_opinion_failure';
+
+export const TOGGLE_THUMBSUP_START = 'toggle_thumbsup_start';
+export const TOGGLE_THUMBSUP_FAILURE = 'toggle_thumbsup_failure';
+export const TOGGLE_THUMBSUP_SUCCESS = 'toggle_thumbsup_success';
+
+export const TOGGLE_THUMBSDOWN_START = 'toggle_thumbsdown_start';
+export const TOGGLE_THUMBSDOWN_FAILURE = 'toggle_thumbsdown_failure';
+export const TOGGLE_THUMBSDOWN_SUCCESS = 'toggle_thumbsdown_success';

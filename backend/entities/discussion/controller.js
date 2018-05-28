@@ -92,7 +92,7 @@ const toggleFavorite = (discussion_id, user_id) => {
         }
 
         if (matched === null) {
-          discussion.favorites.push(user_id);
+          discussion.favorites = discussion.favorites.concat(user_id);
         } else {
           discussion.favorites = [
             ...discussion.favorites.slice(0, matched),

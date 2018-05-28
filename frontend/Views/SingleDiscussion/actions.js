@@ -22,6 +22,14 @@ import {
   DELETE_OPINION_START,
   DELETE_OPINION_SUCCESS,
   DELETE_OPINION_FAILURE,
+
+  TOGGLE_THUMBSUP_START,
+  TOGGLE_THUMBSUP_FAILURE,
+  TOGGLE_THUMBSUP_SUCCESS,
+
+  TOGGLE_THUMBSDOWN_START,
+  TOGGLE_THUMBSDOWN_FAILURE,
+  TOGGLE_THUMBSDOWN_SUCCESS,
 } from './constants';
 
 import {
@@ -31,6 +39,8 @@ import {
   postOpinionApi,
   deletePostApi,
   deleteOpinionApi,
+  thumbsUpOpinionApi,
+  thumbsDownOpinionApi,
 } from './api';
 
 /**
@@ -181,4 +191,56 @@ export const deleteOpinion = (opinionId, discussionSlug) => {
       error => dispatch({ type: DELETE_OPINION_FAILURE })
     );
   };
+};
+
+export const thumbsUpOpinion = (opinionId, discussionSlug) => {
+  return (dispatch, getState) => {
+    dispatch({ type: TOGGLE_THUMBSUP_START, payload: opinionId });
+
+    thumbsUpOpinionApi(opinionId).then(
+      data => {
+        if (data.data) {
+          fetchSingleDiscussion(discussionSlug).then(
+            data => {
+              dispatch({ type: TOGGLE_THUMBSUP_SUCCESS });
+              dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
+            },
+            error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
+          );
+        } else {
+          dispatch({ type: TOGGLE_THUMBSUP_FAILURE });
+        }
+
+      },
+      error => {
+        dispatch({ type: TOGGLE_THUMBSUP_FAILURE });
+      }
+    );
+  }
+};
+
+export const thumbsDownOpinion = (opinionId, discussionSlug) => {
+  return (dispatch, getState) => {
+    dispatch({ type: TOGGLE_THUMBSDOWN_START, payload: opinionId });
+
+    thumbsDownOpinionApi(opinionId).then(
+      data => {
+        if (data.data) {
+          fetchSingleDiscussion(discussionSlug).then(
+            data => {
+              dispatch({ type: TOGGLE_THUMBSDOWN_SUCCESS });
+              dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
+            },
+            error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
+          );
+        } else {
+          dispatch({ type: TOGGLE_THUMBSDOWN_FAILURE });
+        }
+
+      },
+      error => {
+        dispatch({ type: TOGGLE_THUMBSDOWN_FAILURE });
+      }
+    );
+  }
 };

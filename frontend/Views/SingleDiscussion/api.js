@@ -22,3 +22,11 @@ export const deletePostApi = (discussionSlug) => {
 export const deleteOpinionApi = (opinionId) => {
   return axios.delete(`/api/opinion/deleteOpinion/${opinionId}`);
 };
+
+export const thumbsUpOpinionApi = (opinionId) => {
+  return axios.put(`/api/opinion/thumbsUpOpinion/${opinionId}`);
+};
+
+export const thumbsDownOpinionApi = (opinionId) => {
+  return axios.put(`/api/opinion/thumbsDownOpinion/${opinionId}`);
+};

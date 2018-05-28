@@ -13,6 +13,8 @@ import {
   deletePost,
   deletedDiscussionRedirect,
   deleteOpinion,
+  thumbsUpOpinion,
+  thumbsDownOpinion,
 } from './actions';
 
 import Discussion from 'Components/SingleDiscussion/Discussion';
@@ -99,6 +101,18 @@ class SingleDiscussion extends Component {
     const { discussion } = this.props.params;
     const { deleteOpinion } = this.props;
     deleteOpinion(opinionId, discussion);
+  }
+
+  thumbsUpOpinion(opinionID) {
+    const { discussion } = this.props.params;
+    const { thumbsUpOpinion } = this.props;
+    thumbsUpOpinion(opinionID, discussion);
+  }
+
+  thumbsDownOpinion(opinionID) {
+    const { discussion } = this.props.params;
+    const { thumbsDownOpinion } = this.props;
+    thumbsDownOpinion(opinionID, discussion);
   }
 
   render() {
@@ -193,10 +207,14 @@ class SingleDiscussion extends Component {
               opDate={opinion.date}
               opContent={opinion.content}
               userId={opinion.user_id}
+              thumbsUps={opinion.thumbsups}
+              thumbsDowns={opinion.thumbsdowns}
               currentUserId={this.props.userId}
               currentUserRole={this.props.userRole}
               deleteAction={this.deleteOpinion.bind(this)}
               deletingOpinion={deletingOpinion}
+              thumbsUpAction={this.thumbsUpOpinion.bind(this)}
+              thumbsDownAction={this.thumbsDownOpinion.bind(this)}
             />
           );
         }) }
@@ -230,5 +248,7 @@ export default connect(
     deletePost: (discussionSlug) => { dispatch(deletePost(discussionSlug)); },
     deletedDiscussionRedirect: () => { dispatch(deletedDiscussionRedirect()); },
     deleteOpinion: (opinionId, discussionSlug) => { dispatch(deleteOpinion(opinionId, discussionSlug)); },
+    thumbsUpOpinion: (opinionId, discussionSlug) => { dispatch(thumbsUpOpinion(opinionId, discussionSlug)); },
+    thumbsDownOpinion: (opinionId, discussionSlug) => { dispatch(thumbsDownOpinion(opinionId, discussionSlug)); },
   }; }
 )(SingleDiscussion);

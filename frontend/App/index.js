@@ -30,6 +30,7 @@ ReactDOM.render (
         <Route path=":forum/discussion/:discussion" component={SingleDiscussion} />
         <Route path=":forum/new_discussion" component={NewDiscussion} />
         <Route path="user/:username" component={UserProfile} />
+        <Route path="user/:username/messages" component={Messages} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

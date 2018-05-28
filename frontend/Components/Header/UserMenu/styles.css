@@ -10,6 +10,20 @@
   display: flex;
   align-items: center;
   flex-flow: row nowrap;
+
+  & .notificationsCount {
+    display: block;
+    background-color: #f1403c;
+    padding: 0px 4px;
+    line-height: 15px;
+    position: absolute;
+    left: 30%;
+    bottom: 50%;
+    border: 2px solid #fff;
+    font-size: 11px;
+    color: #fff;
+    border-radius: 20px;
+  }
 }
 
 .userAvatar {

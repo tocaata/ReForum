@@ -87,6 +87,38 @@
   line-height: 26px;
 }
 
+.actionContainer {
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+
+  & .selected {
+    color: black;
+
+    &:hover {
+      color: gray;
+    }
+  }
+
+  & .gray {
+    color: gray;
+    padding-right: 5px;
+  }
+
+  & .actionButton {
+    padding: 5px 5px;
+    font-weight: normal;
+
+    & .thumbsUp {
+      font-size: 16px;
+    }
+
+    & .thumbsDown {
+      font-size: 16px;
+    }
+  }
+}
+
 .commentFooter {
   display: flex;
   align-items: center;

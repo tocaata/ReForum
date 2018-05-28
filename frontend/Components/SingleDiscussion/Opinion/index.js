@@ -22,6 +22,10 @@ class Opinion extends Component {
       currentUserRole,
       deleteAction,
       deletingOpinion,
+      thumbsUpAction,
+      thumbsDownAction,
+      thumbsUps,
+      thumbsDowns,
     } = this.props;
 
     let dateDisplay = moment(opDate);
@@ -55,6 +59,19 @@ class Opinion extends Component {
           />
         </div>
 
+        <div className={styles.actionContainer}>
+          <Button className={classnames(styles.actionButton, thumbsUps.includes(currentUserId) ? styles.selected : '')}
+          onClick={() => { thumbsUpAction(opinionId); }}>
+            <i className={classnames('fa fa-thumbs-up', styles.thumbsUp)}></i>
+          </Button>
+          <span className={styles.gray}>{thumbsUps.length}</span>
+          <Button className={classnames(styles.actionButton, thumbsDowns.includes(currentUserId) ? styles.selected : '')}
+          onClick={() => { thumbsDownAction(opinionId); }}>
+            <i className={classnames('fa fa-thumbs-down', styles.thumbsDown)}></i>
+          </Button>
+          <span className={styles.gray}>{thumbsDowns.length}</span>
+        </div>
+
         { (deletingOpinion === opinionId) && <div className={styles.deletingOpinion}>Deleting Opinion ...</div> }
       </div>
     );
@@ -73,6 +90,8 @@ Opinion.defaultProps = {
   currentUserRole: 'user',
   deleteAction: () => {},
   deletingOpinion: null,
+  thumbsUpAction: () => {},
+  thumbsDownAction: () => {},
 };
 
 Opinion.propTypes = {
@@ -87,6 +106,8 @@ Opinion.propTypes = {
   currentUserRole: React.PropTypes.string,
   deleteAction: React.PropTypes.func,
   deletingOpinion: React.PropTypes.any,
+  thumbsUpAction: React.PropTypes.func,
+  thumbsDownAction: React.PropTypes.func,
 };
 
 export default Opinion;
