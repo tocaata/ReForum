@@ -1,5 +1,6 @@
 // models
 const Opinion = require('./model');
+const sendMessage = require('../user/controller').sendMessage;
 
 /**
  * get all opinion regarding a single discussion
@@ -85,7 +86,13 @@ const thumbsUpOpinion = (opinion_id, user_id) => {
         }
         opinion.save((error, updatedOpinion) => {
           if (error) { console.log(error); reject(error); }
-          resolve(updatedOpinion);
+          else {
+            sendMessage(user_id, opinion.user_id, 'thumbsup', opinion.discussion_id, `${user_id} agree your opinion.`)
+            .then(
+              (result) => { resolve(updatedOpinion); },
+              (error) => { console.log(error); reject(error); }
+            );
+          }
         });
       }
     });
@@ -110,7 +117,7 @@ const thumbsDownOpinion = (opinion_id, user_id) => {
         }
         opinion.save((error, updatedOpinion) => {
           if (error) { console.log(error); reject(error); }
-          resolve(updatedOpinion);
+          else resolve(updatedOpinion);
         });
       }
     });

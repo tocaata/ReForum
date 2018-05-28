@@ -154,7 +154,7 @@ const getFullProfile = (username) => {
   });
 };
 
-const sendMessage = (from_id, to_id, type, discussion_id, content) -> {
+const sendMessage = (from_id, to_id, type, discussion_id, content) => {
   return new Promise((resolve, reject) => {
     const newMessage = Message.new({
       from: from_id,
@@ -165,7 +165,12 @@ const sendMessage = (from_id, to_id, type, discussion_id, content) -> {
       read: false,
     });
 
-    newMessage.save((error) => {});
+    newMessage.save((error) => {
+      if (error) { console.log(error); reject(error); }
+      else {
+        resolve(newMessage)
+      }
+    });
   });
 }
 
@@ -173,4 +178,5 @@ module.exports = {
   signInViaGithub,
   getUser,
   getFullProfile,
+  sendMessage,
 };
