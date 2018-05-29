@@ -17,6 +17,7 @@ import SingleDiscussion from '../Views/SingleDiscussion';
 import NewDiscussion from '../Views/NewDiscussion';
 import UserProfile from '../Views/UserProfile';
 import NotFound from '../Views/NotFound';
+import Message from '../Views/Message';
 
 ReactDOM.render (
   <Provider store={appStore}>
@@ -30,7 +31,7 @@ ReactDOM.render (
         <Route path=":forum/discussion/:discussion" component={SingleDiscussion} />
         <Route path=":forum/new_discussion" component={NewDiscussion} />
         <Route path="user/:username" component={UserProfile} />
-        <Route path="user/:username/messages" component={Messages} />
+        <Route path="user/:username/messages" component={Message} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

@@ -14,4 +14,4 @@ const messageSchema = mongoose.Schema({
   read: Boolean,
 });
 
-module.exports = mongoose.model('message', opinionSchema);
+module.exports = mongoose.model('message', messageSchema);

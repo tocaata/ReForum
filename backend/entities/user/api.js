@@ -1,6 +1,7 @@
 const passport = require('passport');
 const signIn = require('./controller').signIn;
 const getFullProfile = require('./controller').getFullProfile;
+const getAllMessages = require('./controller').getAllMessages;
 
 /**
  * user apis
@@ -37,6 +38,14 @@ const userAPI = (app) => {
     getFullProfile(req.params.username).then(
       result => { res.send(result); },
       error => { res.send({ error }); }
+    );
+  });
+
+  // get user all messages
+  app.get('/api/user/messages/:username', (req, res) => {
+    getAllMessages(req.params.username).then(
+      result => { res.send(result); },
+      error => { res.send({ error }); },
     );
   });
 };

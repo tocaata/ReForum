@@ -6,11 +6,12 @@ import MessageBox from './MessageBox';
 
 class MessageList extends Component {
   render() {
+    let { messages } = this.props;
     return (
       <div>
         { messages && messages.map((message) =>
-            <MessageBox/>
-          ) 
+            <MessageBox content={this.props.messages.content} discussion={this.props.messages.discussion} />
+          )
         }
       </div>
     );

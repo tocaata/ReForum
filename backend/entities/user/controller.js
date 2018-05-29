@@ -8,6 +8,7 @@ const getAllOpinions = require('../opinion/controller').getAllOpinions;
 const User = require('./model');
 const Discussion = require('../discussion/model');
 const Opinion = require('../opinion/model');
+const Message = require('../message/model');
 
 /**
  * get user doc by user id
@@ -154,6 +155,29 @@ const getFullProfile = (username) => {
   });
 };
 
+const getAllMessages = (username) => {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username })
+    .lean()
+    .exec((error, result) => {
+      if (error) { console.log(error); reject(error); }
+      else if (!result) reject('not_found');
+      else {
+        Message.find({ user_id: result._id })
+        .populate('discussion')
+        .lean()
+        .exec((error, messages) => {
+          if (error) { console.log(error);reject(error); }
+          else {
+            result.messages = messages;
+            resolve(result);
+          }
+        });
+      }
+    });
+  });
+}
+
 const sendMessage = (from_id, to_id, type, discussion_id, content) => {
   return new Promise((resolve, reject) => {
     const newMessage = Message.new({
@@ -179,4 +203,5 @@ module.exports = {
   getUser,
   getFullProfile,
   sendMessage,
+  getAllMessages,
 };
