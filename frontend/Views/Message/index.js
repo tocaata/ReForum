@@ -34,6 +34,13 @@ class Message extends Component {
       );
     }
 
+    const {
+      name,
+      username,
+      github,
+      avatarUrl,
+    } = messages;
+
     return (
       <div className={classnames(appLayout.constraintWidth, styles.container)}>
         <Helmet><title>{`${name || username} | ReForum`}</title></Helmet>

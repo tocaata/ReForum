@@ -14,18 +14,15 @@ import {
  * @param  {String} userSlug
  * @return {action}
  */
-export const fetchUserMessages = (userId) => {
+export const fetchUserMessages = (userSlug) => {
   return (dispatch, getState) => {
     dispatch({ type: FETCH_USER_MESSAGES_START });
 
-    fetchUserMessageApi(userId).then(
+    fetchUserMessageApi(userSlug).then(
       data => {
-        console.log("aaaaaaaaa");
-        console.log(data);
         if (data.data.error) {
           dispatch({ type: FETCH_USER_MESSAGES_FAILURE });
         } else {
-          console.log("toccata");
           dispatch({ type: FETCH_USER_MESSAGES_SUCCESS, payload: data.data });
         }
       },

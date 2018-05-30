@@ -11,15 +11,15 @@ const initialState = {
 };
 
 export const userMessageReducer = (state = initialState, action) => {
-  switch(action) {
+  switch (action.type) {
     case FETCH_USER_MESSAGES_START:
       return Object.assign({}, { fetchingMessages: true});
 
     case FETCH_USER_MESSAGES_SUCCESS:
-      console.log(action.payload.messages);
       return Object.assign({}, {
         fetchingMessages: false,
-        messages: action.payload.messages,
+        messages: action.payload,
+        error: null,
       });
 
     case FETCH_USER_MESSAGES_FAILURE:

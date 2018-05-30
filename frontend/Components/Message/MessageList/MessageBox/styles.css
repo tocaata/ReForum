@@ -1,0 +1,14 @@
+@value primaryFontColor, secondaryFontColor, borderColor, backShade from 'SharedStyles/globalStyles';
+@value smallBP from 'SharedStyles/globalStyles';
+
+/**
+ * PostBox styles
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid borderColor;
+  &:last-child { border-bottom: none; }
+}

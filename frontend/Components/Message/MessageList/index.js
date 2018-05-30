@@ -6,14 +6,27 @@ import MessageBox from './MessageBox';
 
 class MessageList extends Component {
   render() {
-    let { messages } = this.props;
+    let { messages } = this.props.messages;
     return (
-      <div>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <span className={styles.title}>Messages</span>
+        </div>
         { messages && messages.map((message) =>
-            <MessageBox content={this.props.messages.content} discussion={this.props.messages.discussion} />
+            <MessageBox content={message.content} discussion={message.discussion} />
           )
         }
       </div>
     );
   }
 }
+
+MessageList.defaultProps = {
+  messages: {},
+};
+
+MessageList.propTypes = {
+  messages: React.PropTypes.object,
+};
+
+export default MessageList;

@@ -1,7 +1,6 @@
 // models
 const Opinion = require('./model');
-const sendMessage = require('../user/controller').sendMessage;
-
+const Message = require('../message/model');
 /**
  * get all opinion regarding a single discussion
  * @param  {ObjectId} discussion_id
@@ -64,6 +63,26 @@ const deleteOpinion = (opinion_id) => {
     .exec((error) => {
       if (error) { console.log(error); reject(error); }
       else resolve('deleted');
+    });
+  });
+};
+
+const sendMessage = (from_id, to_id, type, discussion_id, content) => {
+  return new Promise((resolve, reject) => {
+    const newMessage = new Message({
+      from: from_id,
+      to: to_id,
+      type,
+      discussion: discussion_id,
+      content,
+      read: false,
+    });
+
+    newMessage.save((error) => {
+      if (error) { console.log(error); reject(error); }
+      else {
+        resolve(newMessage)
+      }
     });
   });
 };

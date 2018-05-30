@@ -160,13 +160,16 @@ const getAllMessages = (username) => {
     User.findOne({ username })
     .lean()
     .exec((error, result) => {
+
       if (error) { console.log(error); reject(error); }
       else if (!result) reject('not_found');
       else {
-        Message.find({ user_id: result._id })
+        Message.find({ to: result._id })
         .populate('discussion')
         .lean()
         .exec((error, messages) => {
+          console.log("aaaaa");
+          console.log(messages);
           if (error) { console.log(error);reject(error); }
           else {
             result.messages = messages;
@@ -176,32 +179,12 @@ const getAllMessages = (username) => {
       }
     });
   });
-}
+};
 
-const sendMessage = (from_id, to_id, type, discussion_id, content) => {
-  return new Promise((resolve, reject) => {
-    const newMessage = Message.new({
-      from: from_id,
-      to: to_id,
-      type,
-      discussion: discussion_id,
-      content,
-      read: false,
-    });
-
-    newMessage.save((error) => {
-      if (error) { console.log(error); reject(error); }
-      else {
-        resolve(newMessage)
-      }
-    });
-  });
-}
 
 module.exports = {
   signInViaGithub,
   getUser,
   getFullProfile,
-  sendMessage,
   getAllMessages,
 };
