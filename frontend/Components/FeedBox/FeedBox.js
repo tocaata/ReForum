@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import Moment from 'moment';
-import styles from './styles';
+import styles from './FeedBox.css';
 
 import DiscussionBox from './DiscussionBox';
 

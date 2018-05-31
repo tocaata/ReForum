@@ -8,6 +8,8 @@ import {
   fetchUserProfileApi,
 } from './api';
 
+import { getUser } from '../../App/actions';
+
 /**
  * fetch the users profile from the server
  * @param  {String} userSlug
@@ -20,7 +22,10 @@ export const fetchUserProfile = (userSlug) => {
     fetchUserProfileApi(userSlug).then(
       data => {
         if (data.data.error) dispatch({ type: FETCH_USER_PROFILE_FAILURE });
-        else dispatch({ type: FETCH_USER_PROFILE_SUCCESS, payload: data.data });
+        else { 
+          dispatch({ type: FETCH_USER_PROFILE_SUCCESS, payload: data.data });
+          dispatch(getUser());
+        }
       },
       error => dispatch({ type: FETCH_USER_PROFILE_FAILURE })
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
-import styles from './styles';
+import styles from './UserMenu.css';
 
 import Button from 'Components/Button';
 
@@ -61,14 +61,14 @@ class UserMenu extends Component {
       userName,
       avatar,
       signOutAction,
+      messagesCount,
     } = this.props;
-
     if (signedIn) {
       return (
         <div style={{ position: 'relative' }}>
           <div className={styles.container} onClick={this.toggleSubMenu}>
             <img className={styles.userAvatar} src={avatar} alt={`${userName} Avatar`} />
-            <span className={styles.notificationsCount}>11</span>
+            <span className={styles.notificationsCount}>{messagesCount}</span>
             <span className={styles.title}>{userName}</span>
           </div>
           {this.renderSubMenu()}
@@ -97,6 +97,7 @@ UserMenu.defaultProps = {
   userName: '',
   gitHandler: '',
   avatar: '',
+  messagesCount: 0,
 };
 
 UserMenu.propTypes = {
@@ -104,6 +105,7 @@ UserMenu.propTypes = {
   userName: React.PropTypes.string,
   gitHandler: React.PropTypes.string,
   avatar: React.PropTypes.string,
+  messagesCount: React.PropTypes.number,
 };
 
 export default onClickOutside(UserMenu);

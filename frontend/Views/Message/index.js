@@ -14,7 +14,6 @@ import { fetchUserMessages } from './actions';
 class Message extends Component {
   componentDidMount() {
     const { fetchUserMessages } = this.props;
-    console.log(this.props.params);
     const { username } = this.props.params;
     fetchUserMessages(username);
   }
@@ -24,6 +23,7 @@ class Message extends Component {
       fetchingMessages,
       messages,
       error,
+      user,
     } = this.props;
 
     if (fetchingMessages) {
@@ -37,9 +37,9 @@ class Message extends Component {
     const {
       name,
       username,
-      github,
+      githubLocation,
       avatarUrl,
-    } = messages;
+    } = user;
 
     return (
       <div className={classnames(appLayout.constraintWidth, styles.container)}>
@@ -49,7 +49,7 @@ class Message extends Component {
           <Profile
             name={name}
             gitHandler={username}
-            location={github.location}
+            location={githubLocation}
             avatarUrl={avatarUrl}
           />
 
@@ -69,6 +69,7 @@ export default connect(
     fetchingMessages: state.userMessages.fetchingMessages,
     messages: state.userMessages.messages,
     error: state.userMessages.error,
+    user: state.user,
   }; },
   (dispatch) => { return {
     fetchUserMessages: (userSlug) => { dispatch(fetchUserMessages(userSlug)); },

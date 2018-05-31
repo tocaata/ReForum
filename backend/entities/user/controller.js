@@ -17,10 +17,23 @@ const Message = require('../message/model');
  */
 const getUser = (user_id) => {
   return new Promise((resolve, reject) => {
-    User.findOne({ _id: user_id }, (error, user) => {
+    User.findOne({ _id: user_id })
+    .lean()
+    .exec((error, user) => {
       if (error) { console.log(error); reject(error); }
       else if (!user) reject(null);
-      else resolve(user);
+      else {
+        Message.find({ to: user._id })
+        .exec((error, messages) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          } else {
+            user.messagesCount = messages.length;
+            resolve(user);
+          }
+        });
+      }
     });
   });
 };
@@ -166,14 +179,12 @@ const getAllMessages = (username) => {
       else {
         Message.find({ to: result._id })
         .populate('discussion')
+        .populate('from')
         .lean()
         .exec((error, messages) => {
-          console.log("aaaaa");
-          console.log(messages);
           if (error) { console.log(error);reject(error); }
           else {
-            result.messages = messages;
-            resolve(result);
+            resolve(messages);
           }
         });
       }

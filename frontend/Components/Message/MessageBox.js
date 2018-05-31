@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import Moment from 'moment';
-import styles from './styles.css';
+import styles from './MessageBox.css';
+import ThuMessage from './ThuMessage';
 
 class MessageBox extends Component {
   render() {
     return (
       <div className={ styles.container }>
-        {this.props.content}
+        { this.props.children }
       </div>
     );
   }

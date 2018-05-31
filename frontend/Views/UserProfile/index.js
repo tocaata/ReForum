@@ -7,7 +7,7 @@ import styles from './styles.css';
 
 // components used in this view
 import Profile from 'Components/UserProfile/Profile';
-import FeedBox from 'Components/FeedBox';
+import FeedBox from 'Components/FeedBox/FeedBox';
 
 // actions
 import {

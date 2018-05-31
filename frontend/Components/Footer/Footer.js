@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
-import styles from './styles';
+import styles from './Footer.css';
 import appLayout from 'SharedStyles/appLayout.css';
 
 class Footer extends Component {

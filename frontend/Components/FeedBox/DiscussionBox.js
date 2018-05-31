@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import Moment from 'moment';
-import styles from './styles';
+import styles from './DiscussionBox.css';
 
 import Tag from 'Components/Tag';
 

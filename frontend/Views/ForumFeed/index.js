@@ -11,7 +11,7 @@ import {
 } from './actions';
 
 import Button from 'Components/Button';
-import FeedBox from 'Components/FeedBox';
+import FeedBox from 'Components/FeedBox/FeedBox';
 import SideBar from 'Components/SideBar';
 
 import appLayout from 'SharedStyles/appLayout.css';

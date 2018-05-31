@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import Header from 'Containers/Header';
-import Footer from 'Components/Footer';
+import Footer from 'Components/Footer/Footer';
 import appLayout from 'SharedStyles/appLayout.css';
 import styles from './styles.css';
 

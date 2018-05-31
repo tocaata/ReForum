@@ -1,0 +1,6 @@
+@value borderColor, backShade, secondaryFontColor, primaryFontColor from 'SharedStyles/globalStyles.css';
+
+.column {
+  display: inline-block;
+  padding-right: 10px;
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, IndexLink } from 'react-router';
 import classnames from 'classnames';
 import _ from 'lodash';
-import styles from './styles';
+import styles from './NavigationBar.css';
 
 class NavigationBar extends Component {
   render() {
