@@ -24,9 +24,9 @@ export const deleteOpinionApi = (opinionId) => {
 };
 
 export const thumbsUpOpinionApi = (opinionId) => {
-  return axios.put(`/api/opinion/thumbsUpOpinion/${opinionId}`);
+  return axios.put(`/api/opinion/thumbsUpOpinion/${opinionId}`, { date: (new Date()).toISOString() });
 };
 
 export const thumbsDownOpinionApi = (opinionId) => {
-  return axios.put(`/api/opinion/thumbsDownOpinion/${opinionId}`);
+  return axios.put(`/api/opinion/thumbsDownOpinion/${opinionId}`, { date: (new Date()).toISOString() });
 };

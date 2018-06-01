@@ -9,7 +9,7 @@ const messageSchema = mongoose.Schema({
   discussion: { type: mongoose.Schema.ObjectId, ref: 'discussion' },
   to: { type: mongoose.Schema.ObjectId, ref: 'user' },
   from: { type: mongoose.Schema.ObjectId, ref: 'user' },
-  date: Date,
+  date: { type: Date, default: Date.now },
   content: Object,
   read: Boolean,
 });

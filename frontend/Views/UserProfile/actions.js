@@ -6,6 +6,7 @@ import {
 
 import {
   fetchUserProfileApi,
+  visitMessageApi,
 } from './api';
 
 import { getUser } from '../../App/actions';

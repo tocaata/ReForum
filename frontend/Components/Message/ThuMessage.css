@@ -3,4 +3,13 @@
 .column {
   display: inline-block;
   padding-right: 10px;
+  margin-left: 10px;
+}
+
+.gray {
+  color: gray;
+}
+
+.noUnderline {
+  text-decoration: none;
 }

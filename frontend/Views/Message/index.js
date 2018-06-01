@@ -9,7 +9,7 @@ import styles from './styles.css';
 import Profile from 'Components/UserProfile/Profile';
 import MessageList from 'Components/Message/MessageList';
 
-import { fetchUserMessages } from './actions';
+import { fetchUserMessages, handleVisit } from './actions';
 
 class Message extends Component {
   componentDidMount() {
@@ -24,6 +24,7 @@ class Message extends Component {
       messages,
       error,
       user,
+      handleVisit,
     } = this.props;
 
     if (fetchingMessages) {
@@ -56,6 +57,7 @@ class Message extends Component {
           <MessageList
             userProfile
             messages={messages}
+            handleVisit={handleVisit}
           />
         </div>
       </div>
@@ -73,5 +75,6 @@ export default connect(
   }; },
   (dispatch) => { return {
     fetchUserMessages: (userSlug) => { dispatch(fetchUserMessages(userSlug)); },
+    handleVisit: (messageID) => { dispatch(handleVisit(handleVisit)); },
   }; }
 )(Message);

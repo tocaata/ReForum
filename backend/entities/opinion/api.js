@@ -35,8 +35,7 @@ const opinionAPI = (app) => {
   // thumbs up an opinion
   app.put('/api/opinion/thumbsUpOpinion/:opinion_id', (req, res) => {
     if (req.user) {
-      console.log("thumbsUpOpinion is catched.");
-      thumbsUpOpinion(req.params.opinion_id, req.user._id).then(
+      thumbsUpOpinion(req.params.opinion_id, req.user._id, req.params.date).then(
         (result) => { res.send({ thumbsUp: true }); },
         (error) => { res.send({ thumbsUp: false }); }
       );
@@ -45,7 +44,6 @@ const opinionAPI = (app) => {
 
   app.put('/api/opinion/thumbsDownOpinion/:opinion_id', (req, res) => {
     if (req.user) {
-      console.log("thumbsDownOpinion is catched.");
       thumbsDownOpinion(req.params.opinion_id, req.user._id).then(
         (result) => { res.send({ thumbsDown: true }); },
         (error) => { res.send({ thumbsDown: false }); }

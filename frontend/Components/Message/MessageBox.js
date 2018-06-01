@@ -14,11 +14,9 @@ class MessageBox extends Component {
 }
 
 MessageBox.defaultProps = {
-  content: "",
 }
 
 MessageBox.propTypes = {
-  content: React.PropTypes.string,
 }
 
 export default MessageBox;

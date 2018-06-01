@@ -76,6 +76,7 @@ const sendMessage = (from_id, to_id, type, discussion_id, content) => {
       discussion: discussion_id,
       content,
       read: false,
+      date: new Date()
     });
 
     newMessage.save((error) => {

@@ -29,7 +29,13 @@ const getUser = (user_id) => {
             console.log(error);
             reject(error);
           } else {
-            user.messagesCount = messages.length;
+            user.messagesCount = messages.reduce((acc, cur) => {
+              if (!cur.read) {
+                return acc + 1;
+              } else {
+                return acc;
+              }
+            });
             resolve(user);
           }
         });
@@ -178,7 +184,7 @@ const getAllMessages = (username) => {
       else if (!result) reject('not_found');
       else {
         Message.find({ to: result._id })
-        .populate('discussion')
+        .populate({path: 'discussion', populate: {path: 'forum'}})
         .populate('from')
         .lean()
         .exec((error, messages) => {
