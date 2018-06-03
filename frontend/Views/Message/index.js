@@ -9,7 +9,7 @@ import styles from './styles.css';
 import Profile from 'Components/UserProfile/Profile';
 import MessageList from 'Components/Message/MessageList';
 
-import { fetchUserMessages, handleVisit } from './actions';
+import { fetchUserMessages, handleVisit, deleteMessage } from './actions';
 
 class Message extends Component {
   componentDidMount() {
@@ -25,6 +25,7 @@ class Message extends Component {
       error,
       user,
       handleVisit,
+      deleteMessage,
     } = this.props;
 
     if (fetchingMessages) {
@@ -58,6 +59,7 @@ class Message extends Component {
             userProfile
             messages={messages}
             handleVisit={handleVisit}
+            deleteMessage={deleteMessage}
           />
         </div>
       </div>
@@ -72,11 +74,17 @@ export default connect(
     messages: state.userMessages.messages,
     error: state.userMessages.error,
     user: state.user,
+    handleVisit: () => {},
+    deleteMessage: () => {},
   }; },
   (dispatch) => { return {
     fetchUserMessages: (userSlug) => { dispatch(fetchUserMessages(userSlug)); },
     handleVisit: (messageID) => { 
-      console.log(messageID);
-      dispatch(handleVisit(messageID)); },
+      dispatch(handleVisit(messageID));
+    },
+    deleteMessage: (messageID) => {
+      console.log(`Start to delete ${messageID}`);
+      dispatch(deleteMessage(messageID));
+    },
   }; }
 )(Message);

@@ -5,7 +5,7 @@ import styles from './MessageBox.css';
 class MessageBox extends Component {
   render() {
     return (
-      <div className={ styles.container }>
+      <div className={ "" }>
         { this.props.children }
       </div>
     );

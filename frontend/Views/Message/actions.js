@@ -4,11 +4,16 @@ import {
   FETCH_USER_MESSAGES_FAILURE,
   UPDATE_USER_MESSAGE_FAILURE,
   UPDATE_USER_MESSAGE_SUCCESS,
+
+  DELETE_MESSAGES_START,
+  DELETE_MESSAGES_SUCCESS,
+  DELETE_MESSAGES_FAILURE,
 } from './constants';
 
 import {
   fetchUserMessageApi,
   visitMessageApi,
+  deleteMessageApi,
 } from './api';
 
 import { getUser } from '../../App/actions';
@@ -54,4 +59,23 @@ export const handleVisit = (messageId) => {
       }
     );
   };
+};
+
+export const deleteMessage = (messageId) => {
+  return (dispatch, getState) => {
+    dispatch({ type: DELETE_MESSAGES_START, payload: messageId });
+    deleteMessageApi(messageId).then(
+      data => {
+        if (data.data.error) {
+          dispatch({ type: DELETE_MESSAGES_FAILURE });
+        } else {
+          dispatch({ type: DELETE_MESSAGES_SUCCESS, payload: messageId });
+        }
+      },
+      error => {
+        console.log("delete fail");
+        dispatch({ type: DELETE_MESSAGES_START });
+      }
+    );
+  }
 };

@@ -1,6 +1,6 @@
 const Message = require('./model');
 
-const vistMessage = (messageId) => {
+const visitMessage = (messageId) => {
   return new Promise((resolve, reject) => {
     Message.findById(messageId, (error, message) => {
       if (error) { console.log(error); reject(error); }
@@ -19,8 +19,14 @@ const vistMessage = (messageId) => {
       }
     });
   });
-}
+};
+
+const deleteMessage = async (messageId) => {
+  await Message.remove({ _id: messageId }).exec();
+  return { deleted: true };
+};
 
 module.exports = {
-  vistMessage,
+  visitMessage,
+  deleteMessage,
 };

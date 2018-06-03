@@ -1,6 +1,8 @@
 // models
 const Opinion = require('./model');
 const Message = require('../message/model');
+const Discussion = require('../discussion/model');
+
 /**
  * get all opinion regarding a single discussion
  * @param  {ObjectId} discussion_id
@@ -28,23 +30,22 @@ const getAllOpinions = (discussion_id) => {
  * @param  {Object} content
  * @return {Promise}
  */
-const createOpinion = ({ forum_id, discussion_id, user_id, content }) => {
-  return new Promise((resolve, reject) => {
-    const newOpinion = new Opinion({
-      forum_id,
-      discussion_id,
-      discussion: discussion_id,
-      user_id,
-      user: user_id,
-      content,
-      date: new Date(),
-    });
-
-    newOpinion.save((error) => {
-      if (error) { console.log(error); reject(error); }
-      else { resolve(newOpinion); }
-    });
+const createOpinion = async (user_id, { forum_id, discussion_id, content }) => {
+  const newOpinion = new Opinion({
+    forum_id,
+    discussion_id,
+    discussion: discussion_id,
+    user_id,
+    user: user_id,
+    content,
+    date: new Date(),
   });
+
+  const newOp = await newOpinion.save();
+  const discuss = await Discussion.findOne({ _id: discussion_id}).exec();
+  await sendMessage(user_id, discuss.user_id, "reply", discussion_id, `${user_id} replied your discussion.`)
+
+  return newOpinion;
 };
 
 const updateOpinion = (opinion_id) => {
@@ -82,7 +83,7 @@ const sendMessage = (from_id, to_id, type, discussion_id, content) => {
     newMessage.save((error) => {
       if (error) { console.log(error); reject(error); }
       else {
-        resolve(newMessage)
+        resolve(newMessage);
       }
     });
   });

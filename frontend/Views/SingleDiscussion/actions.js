@@ -210,7 +210,6 @@ export const thumbsUpOpinion = (opinionId, discussionSlug) => {
         } else {
           dispatch({ type: TOGGLE_THUMBSUP_FAILURE });
         }
-
       },
       error => {
         dispatch({ type: TOGGLE_THUMBSUP_FAILURE });
