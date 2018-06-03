@@ -15,33 +15,19 @@ const Message = require('../message/model');
  * @param  {ObjectId} user_id
  * @return {promise}
  */
-const getUser = (user_id) => {
-  return new Promise((resolve, reject) => {
-    User.findOne({ _id: user_id })
-    .lean()
-    .exec((error, user) => {
-      if (error) { console.log(error); reject(error); }
-      else if (!user) reject(null);
-      else {
-        Message.find({ to: user._id })
-        .exec((error, messages) => {
-          if (error) {
-            console.log(error);
-            reject(error);
-          } else {
-            user.messagesCount = messages.reduce((acc, cur) => {
-              if (!cur.read) {
-                return acc + 1;
-              } else {
-                return acc;
-              }
-            }, 0);
-            resolve(user);
-          }
-        });
-      }
-    });
-  });
+const getUser = async (user_id) => {
+  let user = await User.findOne({ _id: user_id }).lean().exec();
+  const messages = await Message.find({ to: user_id }).exec();
+
+  user.messagesCount = messages.reduce((acc, cur) => {
+    if (!cur.read) {
+      return acc + 1;
+    } else {
+      return acc;
+    }
+  }, 0);
+
+  return user;
 };
 
 /**
