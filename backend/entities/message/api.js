@@ -11,4 +11,6 @@ const MessageAPI = (app) => {
       res.send({ authenticated: false });
     }
   });
-}
+};
+
+module.exports = MessageAPI;

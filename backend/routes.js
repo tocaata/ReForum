@@ -9,6 +9,7 @@ const forumAPI = require('./entities/forum/api');
 const discussionAPI = require('./entities/discussion/api');
 const opinionAPI = require('./entities/opinion/api');
 const adminAPI = require('./entities/admin/api');
+const messageAPI = require('./entities/message/api');
 
 /**
  * routes configurations
@@ -37,6 +38,9 @@ const routesConfig = (app) => {
 
   // apply admin apis
   adminAPI(app);
+
+  // apply message apis
+  messageAPI(app);
 
   // all get request will send index.html for react-router
   // to handle the route request

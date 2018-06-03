@@ -35,7 +35,7 @@ const getUser = (user_id) => {
               } else {
                 return acc;
               }
-            });
+            }, 0);
             resolve(user);
           }
         });
@@ -184,6 +184,7 @@ const getAllMessages = (username) => {
       else if (!result) reject('not_found');
       else {
         Message.find({ to: result._id })
+        .sort({date: -1})
         .populate({path: 'discussion', populate: {path: 'forum'}})
         .populate('from')
         .lean()

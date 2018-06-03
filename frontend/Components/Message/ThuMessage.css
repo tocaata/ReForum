@@ -13,3 +13,7 @@
 .noUnderline {
   text-decoration: none;
 }
+
+.narrowDl {
+  margin: 0.5em 0px;
+}

@@ -8,7 +8,7 @@ const vistMessage = (messageId) => {
         if (!message) {
           console.log(error); reject(error);
         } else {
-          message.visit = true;
+          message.read = true;
           message.save((error, updatedMessage) => {
             if (error) { console.log(error); reject(error); }
             else {
@@ -21,6 +21,6 @@ const vistMessage = (messageId) => {
   });
 }
 
-export {
+module.exports = {
   vistMessage,
 };

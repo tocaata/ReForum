@@ -12,6 +12,7 @@ const sharedStylesPath = path.resolve(__dirname, '../frontend', 'SharedStyles');
 const componentsPath = path.resolve(__dirname, '../frontend', 'Components');
 const containersPath = path.resolve(__dirname, '../frontend', 'Containers');
 const viewsPath = path.resolve(__dirname, '../frontend', 'Views');
+const libsPath = path.resolve(__dirname, '../frontend', 'Libs');
 
 /**
  * webpack development configuration
@@ -65,6 +66,7 @@ module.exports = {
       Components: componentsPath,
       Containers: containersPath,
       Views: viewsPath,
+      Libs: libsPath,
     },
   },
 };

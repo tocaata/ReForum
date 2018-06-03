@@ -6,6 +6,8 @@ import {
   UPDATE_USER_MESSAGE_SUCCSEE,
 } from './constants';
 
+import Message from 'Libs/Message';
+
 const initialState = {
   fetchingMessages: true,
   messages: {},
@@ -18,9 +20,11 @@ export const userMessageReducer = (state = initialState, action) => {
       return Object.assign({}, state, { fetchingMessages: true});
 
     case FETCH_USER_MESSAGES_SUCCESS:
+      let msgs = action.payload.map((m) => Message.toObject(m));
+
       return Object.assign({}, state, {
         fetchingMessages: false,
-        messages: action.payload,
+        messages: msgs,
         error: null,
       });
 

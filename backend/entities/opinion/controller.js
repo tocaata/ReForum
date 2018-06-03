@@ -95,10 +95,13 @@ const thumbsUpOpinion = (opinion_id, user_id) => {
       else if (!opinion) { reject(null); }
       else {
         let matched = opinion.thumbsups.indexOf(user_id), matchedDown = opinion.thumbsdowns.indexOf(user_id);
+        let isThumbsup = false;
         if (matched < 0) {
           opinion.thumbsups = opinion.thumbsups.concat(user_id);
+          isThumbsup = true;
         } else {
           opinion.thumbsups.splice(matched, 1);
+          isThumbsup = false;
         }
 
         if (matchedDown >= 0) {
@@ -106,12 +109,14 @@ const thumbsUpOpinion = (opinion_id, user_id) => {
         }
         opinion.save((error, updatedOpinion) => {
           if (error) { console.log(error); reject(error); }
-          else {
+          else if (isThumbsup){
             sendMessage(user_id, opinion.user_id, 'thumbsup', opinion.discussion_id, `${user_id} agree your opinion.`)
             .then(
               (result) => { resolve(updatedOpinion); },
               (error) => { console.log(error); reject(error); }
             );
+          } else {
+            resolve(updatedOpinion);
           }
         });
       }

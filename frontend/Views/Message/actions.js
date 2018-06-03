@@ -3,12 +3,15 @@ import {
   FETCH_USER_MESSAGES_SUCCESS,
   FETCH_USER_MESSAGES_FAILURE,
   UPDATE_USER_MESSAGE_FAILURE,
-  UPDATE_USER_MESSAGE_SUCCSEE,
+  UPDATE_USER_MESSAGE_SUCCESS,
 } from './constants';
 
 import {
   fetchUserMessageApi,
+  visitMessageApi,
 } from './api';
+
+import { getUser } from '../../App/actions';
 
 
 /**
@@ -26,11 +29,12 @@ export const fetchUserMessages = (userSlug) => {
           dispatch({ type: FETCH_USER_MESSAGES_FAILURE });
         } else {
           dispatch({ type: FETCH_USER_MESSAGES_SUCCESS, payload: data.data });
+          dispatch(getUser());
         }
       },
       error => dispatch({ type: FETCH_USER_MESSAGES_FAILURE })
     );
-  }
+  };
 };
 
 
@@ -41,12 +45,13 @@ export const handleVisit = (messageId) => {
         if (data.data.error) {
           dispatch({ type: UPDATE_USER_MESSAGE_FAILURE });
         } else {
-          dispatch({ type: UPDATE_USER_MESSAGE_SUCCSEE, payload: data.data });
+          dispatch({ type: UPDATE_USER_MESSAGE_SUCCESS, payload: data.data });
+          dispatch(getUser());
         }
       },
       error => {
         dispatch({ type: UPDATE_USER_MESSAGE_FAILURE });
       }
     );
-  }
+  };
 };

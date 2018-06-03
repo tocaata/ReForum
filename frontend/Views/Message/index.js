@@ -75,6 +75,8 @@ export default connect(
   }; },
   (dispatch) => { return {
     fetchUserMessages: (userSlug) => { dispatch(fetchUserMessages(userSlug)); },
-    handleVisit: (messageID) => { dispatch(handleVisit(handleVisit)); },
+    handleVisit: (messageID) => { 
+      console.log(messageID);
+      dispatch(handleVisit(messageID)); },
   }; }
 )(Message);

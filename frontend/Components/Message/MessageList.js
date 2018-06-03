@@ -4,10 +4,12 @@ import Moment from 'moment';
 import styles from './MessageList.css';
 import MessageBox from './MessageBox';
 import ThuMessage from './ThuMessage';
+import Message from 'Libs/Message';
+
 
 class MessageList extends Component {
   render() {
-    const messages = this.props.messages;
+    const {messages, handleVisit} = this.props;
 
     return (
       <div className={styles.container}>
@@ -15,9 +17,8 @@ class MessageList extends Component {
           <span className={styles.title}>Messages</span>
         </div>
         { messages && messages.map((message, index) =>
-            <MessageBox key={index} content={message.content} discussion={message.discussion}>
-              <ThuMessage message_id={message._id} discussion_slug={message.discussion.discussion_slug} discussion_title={message.discussion.title} discussion_forum={message.discussion.forum.forum_slug}
-              date={message.date} userName={message.from.username} userUrl={message.from.github.url} avatarUrl={message.from.avatarUrl} handleVisit={this.props.handleVisit} />
+            <MessageBox key={index}>
+              <ThuMessage message={message} handleVisit={handleVisit}/>
             </MessageBox>
           )
         }
@@ -27,26 +28,12 @@ class MessageList extends Component {
 }
 
 MessageList.defaultProps = {
-  messages: [{
-    from: {},
-    // type: "thumbsup",
-    discussion: {},
-    read: false,
-    date: "",
-  }],
+  messages: [Message.defaultProps],
   handleVisit: () => {},
 };
 
 MessageList.propTypes = {
-  messages: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      from: React.PropTypes.object,
-      // type: React.PropTypes.string,
-      discussion: React.PropTypes.object,
-      read: React.PropTypes.boolean,
-      date: React.PropTypes.string,
-    })
-  ),
+  messages: React.PropTypes.arrayOf(React.PropTypes.shape(Message.propTypes)),
   handleVisit: React.PropTypes.func,
 };
 
