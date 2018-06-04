@@ -11,6 +11,22 @@ import Tag from 'Components/Tag';
 import RichEditor from 'Components/RichEditor';
 
 class Discussion extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { editable: false, editIcon: 'fa fa-edit' };
+    this.editMode = this.editMode.bind(this);
+  }
+
+  editMode() {
+    this.setState((prevState) => {
+      if (prevState.editable) {
+        return { editable: !prevState.editable, editIcon: 'fa fa-edit' }
+      } else {
+        return { editable: !prevState.editable, editIcon: 'fa fa-times'};
+      }
+    });
+  }
+
   render() {
     const {
       id,
@@ -29,6 +45,10 @@ class Discussion extends Component {
       deletingDiscussion,
       deleteAction,
     } = this.props;
+
+    const { editable } = this.state;
+
+    const editMode = () => {};
 
     let dateDisplay = moment(discDate);
     dateDisplay = dateDisplay.from(moment());
@@ -60,7 +80,7 @@ class Discussion extends Component {
         <div className={styles.discTitle}>{discTitle}</div>
         <div className={styles.discContent}>
           <RichEditor
-            readOnly={true}
+            readOnly={!editable}
             value={discContent}
           />
         </div>
@@ -73,6 +93,11 @@ class Discussion extends Component {
             <i className={classnames(`fa fa-${userFavorited ? 'heart' : 'heart-o'}`)}></i>
             <span>{favCount}</span>
           </Button>
+
+          { allowDelete && <Button noUppercase className={styles.deleteButton} onClick={() => { this.editMode(); }}>
+            <i className={classnames(this.state.editIcon, styles.trashIcon)}></i>
+            <span>{this.state.editable ? 'Cancel' : 'Edit'}</span>
+          </Button> }
 
           { allowDelete && <Button noUppercase className={styles.deleteButton} onClick={() => { deleteAction(); }}>
             <i className={classnames('fa fa-trash', styles.trashIcon)}></i>
