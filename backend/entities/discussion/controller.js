@@ -11,32 +11,15 @@ const Opinion = require('../opinion/model');
  * @param  {String} discussion_id
  * @return {Promise}
  */
-const getDiscussion = (discussion_slug, discussion_id) => {
-  return new Promise((resolve, reject) => {
-    let findObject = {};
-    if (discussion_slug) findObject.discussion_slug = discussion_slug;
-    if (discussion_id) findObject._id = discussion_id;
+const getDiscussion = async (discussion_slug, discussion_id) => {
+  let findObject = {};
+  if (discussion_slug) findObject.discussion_slug = discussion_slug;
+  if (discussion_id) findObject._id = discussion_id;
 
-    Discussion
-    .findOne(findObject)
-    .populate('forum')
-    .populate('user')
-    .lean()
-    .exec((error, result) => {
-      if (error) { console.log(error); reject(error); }
-      else if (!result) reject(null);
-      else {
-        // add opinions to the discussion object
-        getAllOpinions(result._id).then(
-          (opinions) => {
-            result.opinions = opinions;
-            resolve(result);
-          },
-          (error) => { { console.log(error); reject(error); } }
-        );
-      }
-    });
-  });
+  let discussion = await Discussion.findOne(findObject).populate('forum').populate('user').lean().exec();
+  discussion.opinions = await getAllOpinions(discussion._id);
+
+  return discussion;
 };
 
 /**

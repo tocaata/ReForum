@@ -12,7 +12,13 @@ const getUser = require('../user/controller').getUser;
  * get all forums list
  * @type {Promise}
  */
-const getAllForums = () => {
+const getAllForums = async () => {
+  const forums = await Forum.find({}).exec();
+  if (!forums) {
+    throw new Error(null);
+  }
+
+  return forums;
   return new Promise((resolve, reject) => {
     Forum
     .find({})
@@ -30,7 +36,31 @@ const getAllForums = () => {
  * @param  {Boolean} pinned
  * @return {Promise}
  */
-const getDiscussions = (forum_id, pinned, sorting_method='date') => {
+const getDiscussions = async (forum_id, pinned, sorting_method='date') => {
+  // define sorthing method
+  const sortWith = { };
+  if (sorting_method === 'date') sortWith.date = -1;
+  if (sorting_method === 'popularity') sortWith.favorites = -1;
+
+  // match discussion id and pinned status
+  let discussions = await Discussion
+  .find({ forum_id: forum_id, pinned: pinned })
+  .sort(sortWith)
+  .populate('forum')
+  .populate('user')
+  .lean()
+  .exec();
+
+  if (!discussions)
+    throw new Error(null);
+
+  for (let disc of discussions) {
+    let opinions = await getAllOpinions(disc._id);
+    disc.opinion_count = opinions ? opinions.length : 0;
+  }
+
+  return discussions;
+//
   return new Promise((resolve, reject) => {
     // define sorthing method
     const sortWith = { };

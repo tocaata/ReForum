@@ -13,17 +13,21 @@ class ThuMessage extends Component {
   }
 
   render() {
-    const deleteMessage = this.props.deleteMessage;
+    const {
+      currentUserId,
+      currentUserRole,
+      message,
+      deleteMessage,
+      deletingMessage,
+    } = this.props;
 
-    const message = this.props.message;
     const {from: user} = message;
 
     let dateDisplay = moment(message.date);
     dateDisplay = dateDisplay.from(moment());
 
     const allowDelete = true;
-
-    // const allowDelete = (user.id === currentUserId) || (currentUserRole === 'admin');
+    // const allowDelete = (message.to.id === currentUserId) || (currentUserRole === 'admin');
 
     return (
       <div className={styles.container}>
@@ -37,7 +41,7 @@ class ThuMessage extends Component {
             </a>
           </div>
           <div className={styles.dateInfo}>{dateDisplay}</div>
-          { allowDelete && <Button className={styles.deleteButton} noUppercase onClick={() => { console.log("start delete.");deleteMessage(message.id); }}>
+          { allowDelete && <Button className={styles.deleteButton} noUppercase onClick={() => { deleteMessage(message.id); } }>
             <i className={classnames('fa fa-trash', styles.trashIcon)}></i>
             <span>Delete</span>
           </Button> }
@@ -59,7 +63,7 @@ class ThuMessage extends Component {
           </span>
         </div>
 
-        // { (this.props.deletingMessage === message.id) && <div className={styles.deletingMessage}>Deleting Message ...</div> }
+        { (this.props.deletingMessage === message.id) && <div className={styles.deletingMessage}>Deleting Message ...</div> }
       </div>
     );
   }
@@ -70,6 +74,8 @@ ThuMessage.defaultProps = {
   handleVisit: () => {},
   deletingMessage: null,
   deleteMessage: () => {},
+  currentUserId: '12345',
+  currentUserRole: 'user',
 };
 
 ThuMessage.propTypes = {
@@ -77,6 +83,8 @@ ThuMessage.propTypes = {
   handleVisit: React.PropTypes.func,
   deletingMessage: React.PropTypes.any,
   deleteMessage: React.PropTypes.func,
+  currentUserId: React.PropTypes.string,
+  currentUserRole: React.PropTypes.string,
 };
 
 export default ThuMessage;

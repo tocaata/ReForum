@@ -8,18 +8,14 @@ const Discussion = require('../discussion/model');
  * @param  {ObjectId} discussion_id
  * @return {Promise}
  */
-const getAllOpinions = (discussion_id) => {
-  return new Promise((resolve, reject) => {
-    Opinion
-    .find({ discussion_id })
-    .populate('user')
-    .sort({ date: -1 })
-    .exec((error, opinions) => {
-      if (error) { console.log(error); reject(error); }
-      else if (!opinions) reject(null);
-      else resolve(opinions);
-    });
-  });
+const getAllOpinions = async (discussion_id) => {
+  const opinions = await Opinion.find({ discussion_id }).populate('user').sort({ date: -1 }).exec();
+  if (opinions){
+    // throw new Error("{error: 'null'}");
+    return opinions;
+  } else {
+    throw new Error("{error: 'null'}");
+  }
 };
 
 /**

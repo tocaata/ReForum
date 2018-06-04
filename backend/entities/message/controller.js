@@ -1,24 +1,11 @@
 const Message = require('./model');
 
-const visitMessage = (messageId) => {
-  return new Promise((resolve, reject) => {
-    Message.findById(messageId, (error, message) => {
-      if (error) { console.log(error); reject(error); }
-      else {
-        if (!message) {
-          console.log(error); reject(error);
-        } else {
-          message.read = true;
-          message.save((error, updatedMessage) => {
-            if (error) { console.log(error); reject(error); }
-            else {
-              resolve(updatedMessage);
-            }
-          });
-        }
-      }
-    });
-  });
+const visitMessage = async (messageId) => {
+  let message = await Message.findOne({ _id: messageId }).exec();
+  message.read = true;
+  let updatedMessage = await message.save();
+  updatedMessage = await updatedMessage.populate({path: 'discussion', populate: {path: 'forum'}}).populate('from').execPopulate();
+  return updatedMessage;
 };
 
 const deleteMessage = async (messageId) => {

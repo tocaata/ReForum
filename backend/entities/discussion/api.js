@@ -13,7 +13,7 @@ const discussionAPI = (app) => {
     const { discussion_slug } = req.params;
     getDiscussion(discussion_slug).then(
       (result) => { res.send(result); },
-      (error) => { res.send(error); }
+      (error) => { console.log(error); res.send(error); }
     );
   });
 

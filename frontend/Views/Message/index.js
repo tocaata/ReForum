@@ -7,7 +7,7 @@ import styles from './styles.css';
 
 // components used in this view
 import Profile from 'Components/UserProfile/Profile';
-import MessageList from 'Components/Message/MessageList';
+import ThuMessage from 'Components/Message/ThuMessage';
 
 import { fetchUserMessages, handleVisit, deleteMessage } from './actions';
 
@@ -26,6 +26,7 @@ class Message extends Component {
       user,
       handleVisit,
       deleteMessage,
+      deletingMessage,
     } = this.props;
 
     if (fetchingMessages) {
@@ -55,12 +56,13 @@ class Message extends Component {
             avatarUrl={avatarUrl}
           />
 
-          <MessageList
-            userProfile
-            messages={messages}
-            handleVisit={handleVisit}
-            deleteMessage={deleteMessage}
-          />
+          <div className={styles.header}>
+            <span className={styles.title}>Messages</span>
+          </div>
+          { messages && messages.map((message, index) =>
+              <ThuMessage message={message} handleVisit={handleVisit} deletingMessage={deletingMessage} deleteMessage={deleteMessage} key={index}/>
+            )
+          }
         </div>
       </div>
     );
@@ -71,6 +73,7 @@ class Message extends Component {
 export default connect(
   (state) => { return {
     fetchingMessages: state.userMessages.fetchingMessages,
+    deletingMessage: state.userMessages.deletingMessage,
     messages: state.userMessages.messages,
     error: state.userMessages.error,
     user: state.user,
@@ -82,9 +85,6 @@ export default connect(
     handleVisit: (messageID) => { 
       dispatch(handleVisit(messageID));
     },
-    deleteMessage: (messageID) => {
-      console.log(`Start to delete ${messageID}`);
-      dispatch(deleteMessage(messageID));
-    },
+    deleteMessage: (messageID) => { dispatch(deleteMessage(messageID)); },
   }; }
 )(Message);

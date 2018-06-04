@@ -43,7 +43,7 @@ export const userMessageReducer = (state = initialState, action) => {
     case UPDATE_USER_MESSAGE_SUCCESS:
       const index = state.messages.findIndex((m) => m.id == action.payload._id);
       let messages = state.messages;
-      messages[index] = action.payload;
+      messages[index] = Message.toObject(action.payload);
 
       return Object.assign({}, state, {
          messages: messages,
@@ -55,11 +55,13 @@ export const userMessageReducer = (state = initialState, action) => {
       });
 
     case DELETE_MESSAGES_START:
+      console.log(action.payload);
       return Object.assign({}, state, {
         deletingMessage: action.payload,
       });
 
     case DELETE_MESSAGES_SUCCESS:
+      console.log(state);
       const matched = state.messages.findIndex((m) => m.id == action.payload);
       state.messages.splice(matched, 1);
 
